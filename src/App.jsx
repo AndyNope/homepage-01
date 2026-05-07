@@ -8,10 +8,13 @@ import {
   Compass,
   Cpu,
   Film,
+  FileSpreadsheet,
+  FileText,
   Ghost,
   Globe,
   Link,
   Layers,
+  QrCode,
   MessageSquare,
   PanelsTopLeft,
   Rocket,
@@ -71,6 +74,30 @@ const projects = [
     href: 'https://utm.andynope.com/',
     Icon: Cpu,
     color: 'from-amber-300/20 to-red-400/25',
+  },
+  {
+    title: 'QR-Code Generator',
+    type: 'Web Tool',
+    description: 'Kostenloser und einfacher QR-Code Generator.',
+    href: null,
+    Icon: QrCode,
+    color: 'from-orange-300/20 to-amber-500/25',
+  },
+  {
+    title: 'QR-Code Overlay',
+    type: 'Web Tool',
+    description: 'QR-Code direkt auf ein PDF oder Bild legen.',
+    href: null,
+    Icon: QrCode,
+    color: 'from-amber-200/20 to-orange-300/25',
+  },
+  {
+    title: 'PDF to CSV',
+    type: 'Web Tool',
+    description: 'Liest eine Rechnung ein und exportiert sie als CSV-Datei.',
+    href: null,
+    Icon: FileSpreadsheet,
+    color: 'from-red-300/20 to-orange-400/25',
   },
 ]
 
@@ -252,15 +279,18 @@ function App() {
         </Reveal>
 
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {projects.map((project, idx) => (
+          {projects.map((project, idx) => {
+            const Tag = project.href ? motion.a : motion.div
+            const linkProps = project.href
+              ? { href: project.href, target: '_blank', rel: 'noopener noreferrer' }
+              : {}
+            return (
             <Reveal key={project.title} delay={idx * 0.08}>
-              <motion.a
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Tag
+                {...linkProps}
                 whileHover={{ y: -8, scale: 1.01 }}
                 transition={{ type: 'spring', stiffness: 220, damping: 18 }}
-                className={`group flex h-full flex-col rounded-3xl border border-orange-100/20 bg-gradient-to-b ${project.color} p-[1px]`}
+                className={`group flex h-full flex-col rounded-3xl border border-orange-100/20 bg-gradient-to-b ${project.color} p-[1px]${project.href ? '' : ' cursor-default'}`}
               >
                 <div className="flex h-full flex-col rounded-3xl bg-[#151926]/90 p-6 backdrop-blur-xl">
                   <div className="mb-4 flex items-center justify-between">
@@ -271,28 +301,19 @@ function App() {
                   </div>
                   <h3 className="text-xl font-semibold text-[#fff1e1]">{project.title}</h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-[#f4d7bc]/80">{project.description}</p>
-                  <div className="mt-5 flex items-center justify-end">
-                    <ArrowUpRight className="h-5 w-5 text-orange-100/75 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </div>
+                  {project.href && (
+                    <div className="mt-5 flex items-center justify-end">
+                      <ArrowUpRight className="h-5 w-5 text-orange-100/75 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </div>
+                  )}
                 </div>
-              </motion.a>
+              </Tag>
             </Reveal>
-          ))}
+            )
+          })}
         </div>
 
-        <Reveal delay={0.3}>
-          <div className="mt-8 text-center">
-            <a
-              href="https://andynope.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-orange-100/30 bg-white/5 px-5 py-2.5 text-sm text-orange-50/80 backdrop-blur-md transition hover:border-orange-200/50 hover:text-white"
-            >
-              Alle Projekte auf andynope.com
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-          </div>
-        </Reveal>
+
       </section>
 
       {/* ── Leistungen ── */}
@@ -386,19 +407,10 @@ function App() {
               </div>
               <div className="flex flex-col gap-3 md:col-span-5 md:justify-self-end">
                 <a
-                  href="https://andynope.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-300 to-amber-300 px-6 py-3 text-sm font-semibold text-[#2a170f]"
-                >
-                  <Globe className="h-4 w-4" />
-                  andynope.com
-                </a>
-                <a
                   href="https://github.com/AndyNope"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-orange-100/40 bg-white/5 px-6 py-3 text-sm text-orange-50 backdrop-blur-md transition hover:border-orange-200/70"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-300 to-amber-300 px-6 py-3 text-sm font-semibold text-[#2a170f]"
                 >
                   <Link className="h-4 w-4" />
                   GitHub &middot; AndyNope
