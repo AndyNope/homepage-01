@@ -1,41 +1,40 @@
 import {
-  ArrowUpRight,
-  Award,
-  Blocks,
-  BookOpen,
-  Briefcase,
-  Brush,
-  Building2,
-  CalendarDays,
-  Camera,
-  Code2,
-  Compass,
-  Cpu,
-  Film,
-  FileSpreadsheet,
-  FileText,
-  Ghost,
-  Globe,
-  GraduationCap,
-  Home,
-  Link,
-  Layers,
-  Mail,
-  MapPin,
-  Menu,
-  MessageCircle,
-  MessageSquare,
-  PanelsTopLeft,
-  Phone,
-  QrCode,
-  Rocket,
-  Smartphone,
-  TrendingUp,
-  Users,
-  Wrench,
-  X,
-  ChevronDown,
-} from 'lucide-react'
+    ArrowUpRight,
+    Award,
+    Blocks,
+    BookOpen,
+    Briefcase,
+    Brush,
+    Building2,
+    Camera,
+    Code2,
+    Compass,
+    Cpu,
+    Film,
+    FileSpreadsheet,
+    FileText,
+    Ghost,
+    Globe,
+    GraduationCap,
+    Home,
+    Link,
+    Layers,
+    Mail,
+    MapPin,
+    Menu,
+    MessageCircle,
+    MessageSquare,
+    PanelsTopLeft,
+    Phone,
+    QrCode,
+    Rocket,
+    Smartphone,
+    TrendingUp,
+    Users,
+    Wrench,
+    X,
+    ChevronDown,
+  } from 'lucide-react'
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion'
 import { useRef, useState, useEffect, lazy, Suspense } from 'react'
 import andyPhoto from './assets/andy-bui.jpg'
@@ -835,6 +834,24 @@ function App() {
                 >
                   <Link className="h-4 w-4" />
                   GitHub &middot; AndyNope
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/andy-nopparat-bui-65a49b18b/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/5 px-5 py-2 text-sm font-medium text-orange-100 border border-orange-100/10 hover:bg-white/6"
+                >
+                  <Globe className="h-4 w-4 text-orange-200" />
+                  LinkedIn &middot; Andy Nopparat Bui
+                </a>
+                <a
+                  href="https://www.instagram.com/andynopparat/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/5 px-5 py-2 text-sm font-medium text-orange-100 border border-orange-100/10 hover:bg-white/6"
+                >
+                  <Camera className="h-4 w-4 text-orange-200" />
+                  Instagram &middot; @andynopparat
                 </a>
               </div>
             </div>
