@@ -30,8 +30,9 @@ import {
   Users,
   Wrench,
   X,
+  ChevronDown,
 } from 'lucide-react'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import andyPhoto from './assets/andy-bui.jpg'
 
@@ -179,6 +180,68 @@ function SkillBar({ name, pct, delay = 0 }) {
         />
       </div>
     </motion.div>
+  )
+}
+
+function JobCard({ job, hasContent }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="rounded-2xl border border-orange-100/15 bg-white/5 backdrop-blur-sm">
+      <button
+        onClick={() => hasContent && setOpen(o => !o)}
+        className={`w-full px-5 py-4 text-left ${hasContent ? 'cursor-pointer' : 'cursor-default'}`}
+      >
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-[#fff4e8]">{job.role}</div>
+            <div className="mt-0.5 text-sm text-orange-200/80">{job.company}</div>
+          </div>
+          <div className="flex items-start gap-3 shrink-0">
+            <div className="text-right text-xs text-orange-100/60">
+              <div className={job.current ? 'font-medium text-emerald-400' : ''}>{job.period}</div>
+              <div className="mt-0.5 flex items-center justify-end gap-1"><MapPin className="h-3 w-3" />{job.location}</div>
+            </div>
+            {hasContent && (
+              <motion.span
+                animate={{ rotate: open ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="mt-0.5 shrink-0 text-orange-200/50"
+              >
+                <ChevronDown className="h-4 w-4" />
+              </motion.span>
+            )}
+          </div>
+        </div>
+        {job.tags.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {job.tags.map(tag => (
+              <span key={tag} className="rounded-full border border-orange-100/20 bg-orange-200/10 px-2.5 py-0.5 text-xs text-orange-100/80">{tag}</span>
+            ))}
+          </div>
+        )}
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="desc"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <ul className="border-t border-orange-100/10 px-5 pb-4 pt-3 space-y-1.5">
+              {job.desc.map((line, i) => (
+                <li key={i} className="flex gap-2 text-sm leading-relaxed text-orange-100/70">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-orange-300/60" />
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
 
@@ -504,18 +567,52 @@ function App() {
         </Reveal>
         <div className="relative mb-16 border-l border-orange-100/20 pl-8">
           {[
-            { role: 'Software Engineer', period: '03/2025 — Heute', company: 'uniQconsulting ag', location: 'Seuzach, Zürich', current: true, tags: ['C#', 'PowerShell', 'ReactJS', 'Azure', 'PowerAutomate', 'PowerApps'] },
-            { role: 'Ramp', period: '12/2024 — Heute', company: 'CGS Customer Ground Service AG', location: 'Zürich', current: true, tags: [] },
-            { role: 'Azure Cloud Developer', period: '03/2024 — 02/2025', company: 'TwinCap First AG', location: 'Wallisellen, Zürich', current: false, tags: ['ReactJS', 'ViteJS', 'Node.js', 'C#', 'CosmosDB', 'Azure', 'MS Teams'] },
-            { role: 'Webmaster', period: '01/2024 — 01/2025', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Moodle', 'Content & Design'] },
-            { role: 'Marketingleiter', period: '01/2024 — 08/2024', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Confluence', 'Jira', 'Miro', 'Hubspot'] },
-            { role: 'Stage Hand', period: '04/2023 — 06/2024', company: 'EPOS Schweiz AG', location: 'Schweiz', current: false, tags: [] },
-            { role: 'Berufsbildner, Coach & Ansprechperson', period: '05/2023 — 11/2023', company: 'ICT Berufsbildungscenter AG', location: 'Sankt Gallen', current: false, tags: ['Modul 106', 'Modul 187', 'Modul 216', 'Modul 295', 'Modul 223', 'Modul 335'] },
-            { role: 'Applikationsentwickler', period: '09/2019 — 04/2023', company: 'Kreativ Media GmbH', location: 'Zürich', current: false, tags: ['Angular', 'TypeScript', 'Node.js', 'PHP', 'MySQL', 'Symfony', 'Docker', 'Jira'] },
-            { role: 'Praktikum Fullstack Webentwickler', period: '08/2018 — 08/2019', company: 'digvis GmbH', location: 'Zürich', current: false, tags: ['PHP', 'JS', 'jQuery', 'HTML5', 'CSS', 'SCSS', 'MariaDB', 'SVN', 'GIMP', 'Inkscape'] },
-            { role: 'Angestellter Gastronomie', period: '09/2015 — 09/2018', company: 'Burger King', location: 'Schweiz', current: false, tags: [] },
-            { role: 'Aushilfe Produktion (Ferienjob)', period: '08/2015 — 09/2015', company: 'Kern & Sammet AG', location: 'Schweiz', current: false, tags: [] },
-          ].map((job, idx) => (
+            { role: 'Software Engineer', period: '03/2025 — Heute', company: 'uniQconsulting ag', location: 'Seuzach, Zürich', current: true, tags: ['C#', 'PowerShell', 'ReactJS', 'Azure', 'PowerAutomate', 'PowerApps'], desc: [
+              'Entwicklung und Wartung von Enterprise-Applikationen auf Azure Cloud-Basis.',
+              'Frontend-Entwicklung mit ReactJS, Backend-Automatisierung mit C# und PowerShell.',
+              'Umsetzung von Workflows und Business-Apps mit Power Automate und Power Apps.',
+            ] },
+            { role: 'Ramp', period: '12/2024 — Heute', company: 'CGS Customer Ground Service AG', location: 'Zürich', current: true, tags: [], desc: [] },
+            { role: 'Azure Cloud Developer', period: '03/2024 — 02/2025', company: 'TwinCap First AG', location: 'Wallisellen, Zürich', current: false, tags: ['ReactJS', 'ViteJS', 'Node.js', 'C#', 'CosmosDB', 'Azure', 'MS Teams'], desc: [
+              'Entwicklung und Wartung von SaaS Add-Ons für Microsoft Teams.',
+              'Backend-Entwicklung über Azure Cloud (CosmosDB, Azure Functions).',
+              'Frontend mit ReactJS und ViteJS, API-Layer mit Node.js und C#.',
+            ] },
+            { role: 'Webmaster', period: '01/2024 — 01/2025', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Moodle', 'Content & Design'], desc: [
+              'Pflege und Weiterentwicklung der Vereinswebseite.',
+              'Content-Management und Design-Anpassungen via Moodle.',
+            ] },
+            { role: 'Marketingleiter', period: '01/2024 — 08/2024', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Confluence', 'Jira', 'Miro', 'Hubspot'], desc: [
+              'Leitung des Marketing-Teams und Planung von Kampagnen.',
+              'Koordination über Confluence, Jira und Miro; CRM via Hubspot.',
+            ] },
+            { role: 'Stage Hand', period: '04/2023 — 06/2024', company: 'EPOS Schweiz AG', location: 'Schweiz', current: false, tags: [], desc: [] },
+            { role: 'Berufsbildner, Coach & Ansprechperson', period: '05/2023 — 11/2023', company: 'ICT Berufsbildungscenter AG', location: 'Sankt Gallen', current: false, tags: ['Modul 106', 'Modul 187', 'Modul 216', 'Modul 295', 'Modul 223', 'Modul 335'], desc: [
+              'Ausbildung von Lernenden in der Applikationsentwicklung.',
+              'Leitung monatlicher Standort-Meetings in Bern, Zürich und St. Gallen.',
+              'Modulverantwortlicher für Modul 106 (Datenbanken).',
+              'Unterrichtete Module: 187 (Linux), 216 (IoT), 106 (DB), 295 (Backend), 223 (OOP), 335 (Mobile/Android).',
+            ] },
+            { role: 'Applikationsentwickler', period: '09/2019 — 04/2023', company: 'Kreativ Media GmbH', location: 'Zürich', current: false, tags: ['Angular', 'TypeScript', 'Node.js', 'PHP', 'MySQL', 'Symfony', 'Docker', 'Jira'], desc: [
+              'Technischer Kundenbetreuer im Hosting-Bereich (Plesk) und Fullstack-Webapp-Entwickler.',
+              'Stack: Angular, TypeScript, Node.js, Git/GitLab, JS, jQuery, HTML5, SCSS, PHP, MySQL.',
+              'Tooling: Confluence/Jira, Kanban/Scrum via Asana, Docker mit Jenkins, Symfony PHP, Webpack Encore.',
+              'Fachliches und disziplinarisches Führen eines Teams von 2 Mitarbeitern.',
+            ] },
+            { role: 'Praktikum Fullstack Webentwickler', period: '08/2018 — 08/2019', company: 'digvis GmbH', location: 'Zürich', current: false, tags: ['PHP', 'JS', 'jQuery', 'HTML5', 'CSS', 'SCSS', 'MariaDB', 'SVN', 'GIMP', 'Inkscape'], desc: [
+              'Fullstack-Webentwicklung für Kundenprojekte.',
+              'Stack: PHP, JS, jQuery, HTML5, CSS, SCSS, Gulp, SVN, MariaDB.',
+              'Design-Arbeiten mit GIMP und Inkscape.',
+            ] },
+            { role: 'Angestellter Gastronomie', period: '09/2015 — 09/2018', company: 'Burger King', location: 'Schweiz', current: false, tags: [], desc: [
+              'Kassierer, Kundenbetreuung, Drive-In Service, tägliche Reinigung.',
+            ] },
+            { role: 'Aushilfe Produktion (Ferienjob)', period: '08/2015 — 09/2015', company: 'Kern & Sammet AG', location: 'Schweiz', current: false, tags: [], desc: [
+              'Produktion Backwaren, Lagerung, Verpacken von Produkten, Reinigung der Geräte und Lager.',
+            ] },
+          ].map((job, idx) => {
+            const hasContent = job.desc.length > 0 || job.tags.length > 0
+            return (
             <motion.div
               key={job.role + job.period}
               initial={{ opacity: 0, x: -20 }}
@@ -527,27 +624,10 @@ function App() {
               <span className="absolute -left-[2.15rem] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border-2 border-orange-300/60 bg-[#0f1117]">
                 {job.current && <span className="h-2 w-2 rounded-full bg-emerald-400" />}
               </span>
-              <div className="rounded-2xl border border-orange-100/15 bg-white/5 px-5 py-4 backdrop-blur-sm">
-                <div className="flex flex-wrap items-start justify-between gap-2">
-                  <div>
-                    <div className="font-medium text-[#fff4e8]">{job.role}</div>
-                    <div className="mt-0.5 text-sm text-orange-200/80">{job.company}</div>
-                  </div>
-                  <div className="text-right text-xs text-orange-100/60">
-                    <div className={job.current ? 'font-medium text-emerald-400' : ''}>{job.period}</div>
-                    <div className="mt-0.5 flex items-center justify-end gap-1"><MapPin className="h-3 w-3" />{job.location}</div>
-                  </div>
-                </div>
-                {job.tags.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {job.tags.map(tag => (
-                      <span key={tag} className="rounded-full border border-orange-100/20 bg-orange-200/10 px-2.5 py-0.5 text-xs text-orange-100/80">{tag}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <JobCard job={job} hasContent={hasContent} />
             </motion.div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Ausbildung */}
