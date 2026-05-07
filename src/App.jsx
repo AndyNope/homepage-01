@@ -504,15 +504,17 @@ function App() {
         </Reveal>
         <div className="relative mb-16 border-l border-orange-100/20 pl-8">
           {[
-            { role: 'Application Developer', period: '03/2025 — Heute', company: 'uniQconsulting ag', location: 'Seuzach, Zürich', current: true, tags: ['ReactJS', 'Angular', 'TypeScript', 'Spring Boot', 'Linux'] },
+            { role: 'Software Engineer', period: '03/2025 — Heute', company: 'uniQconsulting ag', location: 'Seuzach, Zürich', current: true, tags: ['C#', 'PowerShell', 'ReactJS', 'Azure', 'PowerAutomate', 'PowerApps'] },
             { role: 'Ramp', period: '12/2024 — Heute', company: 'CGS Customer Ground Service AG', location: 'Zürich', current: true, tags: [] },
-            { role: 'Cloud Software Developer', period: '03/2024 — 03/2025', company: 'TwinCap First AG', location: 'Wallisellen, Zürich', current: false, tags: ['Python', 'Java', 'Node.js', 'MySQL', 'M5Stack', 'Raspberry Pi'] },
+            { role: 'Azure Cloud Developer', period: '03/2024 — 02/2025', company: 'TwinCap First AG', location: 'Wallisellen, Zürich', current: false, tags: ['ReactJS', 'ViteJS', 'Node.js', 'C#', 'CosmosDB', 'Azure', 'MS Teams'] },
             { role: 'Webmaster', period: '01/2024 — 01/2025', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Moodle', 'Content & Design'] },
             { role: 'Marketingleiter', period: '01/2024 — 08/2024', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Confluence', 'Jira', 'Miro', 'Hubspot'] },
             { role: 'Stage Hand', period: '04/2023 — 06/2024', company: 'EPOS Schweiz AG', location: 'Schweiz', current: false, tags: [] },
-            { role: 'Informatik Ausbildner', period: '05/2023 — 11/2023', company: 'ICT Berufsbildungscenter AG', location: 'Sankt Gallen', current: false, tags: ['Modul 106', 'Modul 187', 'Modul 216', 'Modul 295', 'Modul 223', 'Modul 335'] },
-            { role: 'Technischer Kundenberatung & Fullstack Web-Entwickler', period: '09/2019 — 06/2023', company: 'Kreativ Media GmbH', location: 'Zürich', current: false, tags: ['Angular', 'TypeScript', 'Node.js', 'PHP', 'MySQL', 'Symfony', 'Docker', 'Jira'] },
-            { role: 'Applikationsentwickler', period: '08/2018 — 07/2019', company: 'digvis GmbH', location: 'Zürich', current: false, tags: ['PHP', 'JS', 'jQuery', 'HTML5', 'SCSS', 'MariaDB', 'Linux'] },
+            { role: 'Berufsbildner, Coach & Ansprechperson', period: '05/2023 — 11/2023', company: 'ICT Berufsbildungscenter AG', location: 'Sankt Gallen', current: false, tags: ['Modul 106', 'Modul 187', 'Modul 216', 'Modul 295', 'Modul 223', 'Modul 335'] },
+            { role: 'Applikationsentwickler', period: '09/2019 — 04/2023', company: 'Kreativ Media GmbH', location: 'Zürich', current: false, tags: ['Angular', 'TypeScript', 'Node.js', 'PHP', 'MySQL', 'Symfony', 'Docker', 'Jira'] },
+            { role: 'Praktikum Fullstack Webentwickler', period: '08/2018 — 08/2019', company: 'digvis GmbH', location: 'Zürich', current: false, tags: ['PHP', 'JS', 'jQuery', 'HTML5', 'CSS', 'SCSS', 'MariaDB', 'SVN', 'GIMP', 'Inkscape'] },
+            { role: 'Angestellter Gastronomie', period: '09/2015 — 09/2018', company: 'Burger King', location: 'Schweiz', current: false, tags: [] },
+            { role: 'Aushilfe Produktion (Ferienjob)', period: '08/2015 — 09/2015', company: 'Kern & Sammet AG', location: 'Schweiz', current: false, tags: [] },
           ].map((job, idx) => (
             <motion.div
               key={job.role + job.period}
@@ -557,8 +559,11 @@ function App() {
         </Reveal>
         <div className="relative mb-16 border-l border-orange-100/20 pl-8">
           {[
-            { title: 'Informatik, Bachelor Im Ingenieurwesen', period: '09/2022 — heute', school: 'ZHAW Zürcher Hochschule für angewandte Wissenschaft', location: 'Winterthur', current: true },
-            { title: 'Informatik und Wirtschaft (IMS), Informatiker EFZ & Kaufmännischer BMS', period: '08/2014 — 08/2019', school: 'Kantonsschule Büelrain', location: 'Winterthur', current: false },
+            { title: 'Bachelor Ingenieurwesen, Informatik', period: '09/2022 — heute', school: 'ZHAW Zürcher Hochschule für angewandte Wissenschaft', location: 'Winterthur', current: true },
+            { title: 'Audio Engineering', period: '11/2021 — 10/2022', school: '', location: 'Schweiz', current: false },
+            { title: 'DIPLÔME DE FRANÇAIS PROFESSIONNEL AFFAIRES B2', period: '03/2022', school: '', location: 'Schweiz', current: false },
+            { title: 'Informatiker EFZ', period: '08/2014 — 08/2019', school: 'Kantonsschule Büelrain', location: 'Winterthur', current: false },
+            { title: 'First Certificate in English (FCE)', period: '06/2018', school: '', location: 'Zürich', current: false },
           ].map((edu, idx) => (
             <motion.div
               key={edu.title}
