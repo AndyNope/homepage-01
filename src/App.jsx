@@ -19,6 +19,7 @@ import {
   Link,
   Layers,
   MapPin,
+  Menu,
   MessageCircle,
   MessageSquare,
   PanelsTopLeft,
@@ -28,9 +29,10 @@ import {
   TrendingUp,
   Users,
   Wrench,
+  X,
 } from 'lucide-react'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import andyPhoto from './assets/andy-bui.jpg'
 
 const projects = [
@@ -180,20 +182,38 @@ function SkillBar({ name, pct, delay = 0 }) {
   )
 }
 
+const NAV_LINKS = [
+  { href: '#projekte', label: 'Projekte' },
+  { href: '#leistungen', label: 'Leistungen' },
+  { href: '#ueber', label: 'Uber mich' },
+  { href: '#lebenslauf', label: 'Lebenslauf' },
+  { href: '#kontakt', label: 'Kontakt' },
+]
+
 function App() {
   const containerRef = useRef(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Close menu on resize to desktop
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const handler = (e) => { if (e.matches) setMenuOpen(false) }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   })
 
-  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -130])
-  const heroScale = useTransform(scrollYProgress, [0, 0.25], [1, 0.92])
+  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -60])
+  const heroScale = useTransform(scrollYProgress, [0, 0.25], [1, 0.96])
   const ringRotate = useTransform(scrollYProgress, [0, 1], [0, 270])
   const glowY = useTransform(scrollYProgress, [0, 1], [0, 190])
 
   return (
-    <main ref={containerRef} className="relative overflow-x-clip">
+    <main ref={containerRef} className="relative overflow-x-hidden">
       {/* Scroll progress bar */}
       <motion.div
         className="fixed left-0 top-0 z-50 h-1 w-full origin-left bg-gradient-to-r from-orange-300 via-amber-400 to-red-500"
@@ -214,25 +234,65 @@ function App() {
 
       {/* ── Nav + Hero ── */}
       <section className="relative mx-auto max-w-6xl px-6 pb-20 pt-10 md:px-10 md:pt-14">
-        <nav className="flex items-center justify-between rounded-full border border-white/20 bg-white/5 px-4 py-3 backdrop-blur-xl md:px-6">
+        <nav className="relative flex items-center justify-between rounded-full border border-white/20 bg-white/5 px-4 py-3 backdrop-blur-xl md:px-6">
           <div className="flex items-center gap-2 text-sm tracking-[0.22em] text-orange-100/90">
             <Code2 className="h-4 w-4" />
             ANDY BUI
           </div>
+
+          {/* Desktop links */}
           <div className="hidden items-center gap-8 text-sm text-orange-50/80 md:flex">
-            <a href="#projekte" className="transition hover:text-white">Projekte</a>
-            <a href="#leistungen" className="transition hover:text-white">Leistungen</a>
-            <a href="#ueber" className="transition hover:text-white">Uber mich</a>
-            <a href="#lebenslauf" className="transition hover:text-white">Lebenslauf</a>
-            <a href="#kontakt" className="transition hover:text-white">Kontakt</a>
+            {NAV_LINKS.map(l => (
+              <a key={l.href} href={l.href} className="transition hover:text-white">{l.label}</a>
+            ))}
           </div>
+
+          {/* Desktop CTA */}
           <a
             href="#kontakt"
-            className="rounded-full border border-orange-100/40 bg-orange-200/10 px-4 py-2 text-xs font-medium tracking-[0.16em] text-orange-50 transition hover:bg-orange-200/20"
+            className="hidden rounded-full border border-orange-100/40 bg-orange-200/10 px-4 py-2 text-xs font-medium tracking-[0.16em] text-orange-50 transition hover:bg-orange-200/20 md:inline-flex"
           >
             Kontakt aufnehmen
           </a>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label={menuOpen ? 'Menu schliessen' : 'Menu oeffnen'}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-orange-100/30 bg-white/5 text-orange-100 md:hidden"
+          >
+            {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </nav>
+
+        {/* Mobile menu drawer */}
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="mt-3 flex flex-col gap-1 rounded-3xl border border-white/20 bg-white/5 px-5 py-4 backdrop-blur-xl md:hidden"
+          >
+            {NAV_LINKS.map(l => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="py-2 text-sm text-orange-50/80 transition hover:text-white"
+              >
+                {l.label}
+              </a>
+            ))}
+            <a
+              href="#kontakt"
+              onClick={() => setMenuOpen(false)}
+              className="mt-2 rounded-full border border-orange-100/40 bg-orange-200/10 px-4 py-2.5 text-center text-xs font-medium tracking-[0.16em] text-orange-50"
+            >
+              Kontakt aufnehmen
+            </a>
+          </motion.div>
+        )}
 
         <motion.div
           style={{ y: heroY, scale: heroScale }}
@@ -296,7 +356,7 @@ function App() {
                 <img
                   src={andyPhoto}
                   alt="Andy Nopparat Bui"
-                  className="w-full rounded-[1.5rem] object-cover"
+                  className="w-full rounded-[1.5rem] object-cover object-top max-h-72 md:max-h-none"
                 />
               </div>
             </Reveal>
