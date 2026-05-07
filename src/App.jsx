@@ -6,6 +6,7 @@ import {
     Briefcase,
     Brush,
     Building2,
+    CalendarDays,
     Camera,
     Code2,
     Compass,
