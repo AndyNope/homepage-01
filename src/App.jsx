@@ -33,8 +33,10 @@ import {
   ChevronDown,
 } from 'lucide-react'
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, lazy, Suspense } from 'react'
 import andyPhoto from './assets/andy-bui.jpg'
+
+const ThreeScene = lazy(() => import('./ThreeScene'))
 
 const projects = [
   {
@@ -473,6 +475,18 @@ function App() {
 
 
       </section>
+
+      {/* ── 3D Deko ── */}
+      <div className="relative mx-auto flex max-w-md flex-col items-center py-4">
+        <div className="h-72 w-full md:h-[26rem]">
+          <Suspense fallback={null}>
+            <ThreeScene />
+          </Suspense>
+        </div>
+        <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-orange-100/25">
+          Interaktiv — Maus bewegen
+        </p>
+      </div>
 
       {/* ── Leistungen ── */}
       <section id="leistungen" className="relative mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28">
