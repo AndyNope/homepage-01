@@ -6,6 +6,7 @@ import {
   Briefcase,
   Brush,
   Building2,
+  CalendarDays,
   Camera,
   Code2,
   Compass,
@@ -16,13 +17,16 @@ import {
   Ghost,
   Globe,
   GraduationCap,
+  Home,
   Link,
   Layers,
+  Mail,
   MapPin,
   Menu,
   MessageCircle,
   MessageSquare,
   PanelsTopLeft,
+  Phone,
   QrCode,
   Rocket,
   Smartphone,
@@ -803,6 +807,24 @@ function App() {
                 <h2 className="text-3xl font-semibold text-[#fff4e8] md:text-5xl">
                   Interessiert? Meld dich gerne.
                 </h2>
+                <div className="mt-6 grid gap-3">
+                  {[
+                    { Icon: Mail,         label: 'E-Mail',    value: 'contact@andynope.com', href: 'mailto:contact@andynope.com' },
+                    { Icon: Phone,        label: 'Telefon',   value: '+41 76 261 18 97',     href: 'tel:+41762611897' },
+                    { Icon: Home,         label: 'Adresse',   value: 'Hulfteggstrasse 36, 8400 Winterthur', href: null },
+                    { Icon: CalendarDays, label: 'Geburtstag',value: '1. August 1997',        href: null },
+                  ].map(({ Icon, label, value, href }) => {
+                    const Tag = href ? 'a' : 'div'
+                    const props = href ? { href, target: href.startsWith('http') ? '_blank' : undefined, rel: href.startsWith('http') ? 'noopener noreferrer' : undefined } : {}
+                    return (
+                      <Tag key={label} {...props} className={`flex items-center gap-3 rounded-2xl border border-orange-100/20 bg-black/20 px-4 py-3 text-sm${href ? ' transition hover:border-orange-200/40 hover:bg-white/5' : ''}`}>
+                        <Icon className="h-4 w-4 shrink-0 text-orange-300" />
+                        <span className="text-orange-100/55 w-20 shrink-0">{label}</span>
+                        <span className="text-[#fce5cf]">{value}</span>
+                      </Tag>
+                    )
+                  })}
+                </div>
               </div>
               <div className="flex flex-col gap-3 md:col-span-5 md:justify-self-end">
                 <a
