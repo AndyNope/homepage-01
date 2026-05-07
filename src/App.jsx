@@ -1,8 +1,11 @@
 import {
   ArrowUpRight,
+  Award,
   Blocks,
   BookOpen,
+  Briefcase,
   Brush,
+  Building2,
   Camera,
   Code2,
   Compass,
@@ -12,15 +15,19 @@ import {
   FileText,
   Ghost,
   Globe,
+  GraduationCap,
   Link,
   Layers,
-  QrCode,
+  MapPin,
+  MessageCircle,
   MessageSquare,
   PanelsTopLeft,
+  QrCode,
   Rocket,
   Smartphone,
   TrendingUp,
   Users,
+  Wrench,
 } from 'lucide-react'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
@@ -146,6 +153,33 @@ function Reveal({ children, delay = 0 }) {
   )
 }
 
+function SkillBar({ name, pct, delay = 0 }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, amount: 0.6 })
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ delay, duration: 0.4 }}
+      className="grid gap-1"
+    >
+      <div className="flex items-center justify-between text-xs">
+        <span className="text-[#fce5cf]">{name}</span>
+        <span className="text-orange-100/55">{pct}%</span>
+      </div>
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+        <motion.div
+          className="h-full rounded-full bg-gradient-to-r from-orange-300 to-amber-400"
+          initial={{ width: 0 }}
+          animate={inView ? { width: `${pct}%` } : {}}
+          transition={{ delay: delay + 0.1, duration: 0.7, ease: 'easeOut' }}
+        />
+      </div>
+    </motion.div>
+  )
+}
+
 function App() {
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -189,6 +223,7 @@ function App() {
             <a href="#projekte" className="transition hover:text-white">Projekte</a>
             <a href="#leistungen" className="transition hover:text-white">Leistungen</a>
             <a href="#ueber" className="transition hover:text-white">Uber mich</a>
+            <a href="#lebenslauf" className="transition hover:text-white">Lebenslauf</a>
             <a href="#kontakt" className="transition hover:text-white">Kontakt</a>
           </div>
           <a
@@ -389,6 +424,211 @@ function App() {
             </div>
           </div>
         </Reveal>
+      </section>
+
+      {/* ── Lebenslauf ── */}
+      <section id="lebenslauf" className="relative mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28">
+        <Reveal>
+          <div className="mb-12 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-orange-100/80">
+            <Briefcase className="h-4 w-4" />
+            Lebenslauf
+          </div>
+        </Reveal>
+
+        {/* Arbeitserfahrung */}
+        <Reveal>
+          <h2 className="mb-8 flex items-center gap-2 text-xl font-semibold text-[#fff4e8]">
+            <Building2 className="h-5 w-5 text-orange-300" />
+            Arbeitserfahrung
+          </h2>
+        </Reveal>
+        <div className="relative mb-16 border-l border-orange-100/20 pl-8">
+          {[
+            { role: 'Application Developer', period: '03/2025 — Heute', company: 'uniQconsulting ag', location: 'Seuzach, Zürich', current: true, tags: ['ReactJS', 'Angular', 'TypeScript', 'Spring Boot', 'Linux'] },
+            { role: 'Ramp', period: '12/2024 — Heute', company: 'CGS Customer Ground Service AG', location: 'Zürich', current: true, tags: [] },
+            { role: 'Cloud Software Developer', period: '03/2024 — 03/2025', company: 'TwinCap First AG', location: 'Wallisellen, Zürich', current: false, tags: ['Python', 'Java', 'Node.js', 'MySQL', 'M5Stack', 'Raspberry Pi'] },
+            { role: 'Webmaster', period: '01/2024 — 01/2025', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Moodle', 'Content & Design'] },
+            { role: 'Marketingleiter', period: '01/2024 — 08/2024', company: 'Alias – Studierende der ZHAW', location: 'Winterthur', current: false, tags: ['Confluence', 'Jira', 'Miro', 'Hubspot'] },
+            { role: 'Stage Hand', period: '04/2023 — 06/2024', company: 'EPOS Schweiz AG', location: 'Schweiz', current: false, tags: [] },
+            { role: 'Informatik Ausbildner', period: '05/2023 — 11/2023', company: 'ICT Berufsbildungscenter AG', location: 'Sankt Gallen', current: false, tags: ['Modul 106', 'Modul 187', 'Modul 216', 'Modul 295', 'Modul 223', 'Modul 335'] },
+            { role: 'Technischer Kundenberatung & Fullstack Web-Entwickler', period: '09/2019 — 06/2023', company: 'Kreativ Media GmbH', location: 'Zürich', current: false, tags: ['Angular', 'TypeScript', 'Node.js', 'PHP', 'MySQL', 'Symfony', 'Docker', 'Jira'] },
+            { role: 'Applikationsentwickler', period: '08/2018 — 07/2019', company: 'digvis GmbH', location: 'Zürich', current: false, tags: ['PHP', 'JS', 'jQuery', 'HTML5', 'SCSS', 'MariaDB', 'Linux'] },
+          ].map((job, idx) => (
+            <motion.div
+              key={job.role + job.period}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: idx * 0.06, duration: 0.5 }}
+              className="relative mb-8 last:mb-0"
+            >
+              <span className="absolute -left-[2.15rem] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border-2 border-orange-300/60 bg-[#0f1117]">
+                {job.current && <span className="h-2 w-2 rounded-full bg-emerald-400" />}
+              </span>
+              <div className="rounded-2xl border border-orange-100/15 bg-white/5 px-5 py-4 backdrop-blur-sm">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div>
+                    <div className="font-medium text-[#fff4e8]">{job.role}</div>
+                    <div className="mt-0.5 text-sm text-orange-200/80">{job.company}</div>
+                  </div>
+                  <div className="text-right text-xs text-orange-100/60">
+                    <div className={job.current ? 'font-medium text-emerald-400' : ''}>{job.period}</div>
+                    <div className="mt-0.5 flex items-center justify-end gap-1"><MapPin className="h-3 w-3" />{job.location}</div>
+                  </div>
+                </div>
+                {job.tags.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {job.tags.map(tag => (
+                      <span key={tag} className="rounded-full border border-orange-100/20 bg-orange-200/10 px-2.5 py-0.5 text-xs text-orange-100/80">{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Ausbildung */}
+        <Reveal>
+          <h2 className="mb-8 flex items-center gap-2 text-xl font-semibold text-[#fff4e8]">
+            <GraduationCap className="h-5 w-5 text-orange-300" />
+            Ausbildung
+          </h2>
+        </Reveal>
+        <div className="relative mb-16 border-l border-orange-100/20 pl-8">
+          {[
+            { title: 'Informatik, Bachelor Im Ingenieurwesen', period: '09/2022 — heute', school: 'ZHAW Zürcher Hochschule für angewandte Wissenschaft', location: 'Winterthur', current: true },
+            { title: 'Informatik und Wirtschaft (IMS), Informatiker EFZ & Kaufmännischer BMS', period: '08/2014 — 08/2019', school: 'Kantonsschule Büelrain', location: 'Winterthur', current: false },
+          ].map((edu, idx) => (
+            <motion.div
+              key={edu.title}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              className="relative mb-8 last:mb-0"
+            >
+              <span className="absolute -left-[2.15rem] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border-2 border-orange-300/60 bg-[#0f1117]">
+                {edu.current && <span className="h-2 w-2 rounded-full bg-emerald-400" />}
+              </span>
+              <div className="rounded-2xl border border-orange-100/15 bg-white/5 px-5 py-4 backdrop-blur-sm">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div className="font-medium text-[#fff4e8]">{edu.title}</div>
+                  <div className="text-right text-xs text-orange-100/60">
+                    <div className={edu.current ? 'font-medium text-emerald-400' : ''}>{edu.period}</div>
+                    <div className="mt-0.5 flex items-center justify-end gap-1"><MapPin className="h-3 w-3" />{edu.location}</div>
+                  </div>
+                </div>
+                <div className="mt-1 text-sm text-orange-200/70">{edu.school}</div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Kenntnisse */}
+        <div className="mb-16 grid gap-10 md:grid-cols-2">
+          <div>
+            <Reveal>
+              <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-[#fff4e8]">
+                <Code2 className="h-5 w-5 text-orange-300" />
+                Software & Sprachen
+              </h2>
+            </Reveal>
+            <div className="grid gap-3">
+              {[
+                ['TypeScript', 100], ['JavaScript', 100], ['jQuery', 100], ['Angular', 100],
+                ['PHP', 100], ['Java', 100], ['JavaFX', 100], ['Java Spring Boot', 90],
+                ['Python', 80], ['ExpressJS', 80], ['MySQL', 80], ['Laravel', 80],
+                ['Symfony', 60], ['Sulu FMS', 60], ['C#', 40], ['C++', 40],
+              ].map(([name, pct], idx) => (
+                <SkillBar key={name} name={name} pct={pct} delay={idx * 0.04} />
+              ))}
+            </div>
+          </div>
+          <div>
+            <Reveal>
+              <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-[#fff4e8]">
+                <Wrench className="h-5 w-5 text-orange-300" />
+                Tools & Design
+              </h2>
+            </Reveal>
+            <div className="grid gap-3">
+              {[
+                ['VS Code', 100], ['IntelliJ', 100], ['Git', 100], ['Eclipse', 100],
+                ['Source Tree', 100], ['Postman / Insomnia', 100], ['Plesk', 100],
+                ['XAMPP', 100], ['Adobe Premiere Pro', 100], ['Adobe Photoshop', 100],
+                ['Adobe InDesign', 100], ['Lightroom', 100], ['Subversion', 60],
+                ['DaVinci Resolve', 50],
+              ].map(([name, pct], idx) => (
+                <SkillBar key={name} name={name} pct={pct} delay={idx * 0.04} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Sprachen + Kurse */}
+        <div className="grid gap-10 md:grid-cols-2">
+          <div>
+            <Reveal>
+              <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-[#fff4e8]">
+                <MessageCircle className="h-5 w-5 text-orange-300" />
+                Sprachen
+              </h2>
+            </Reveal>
+            <div className="grid gap-3">
+              {[
+                ['Deutsch', 'C2'], ['Thai', 'C1'], ['Englisch', 'B2'], ['Französisch', 'B2'],
+              ].map(([lang, level], idx) => (
+                <motion.div
+                  key={lang}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ delay: idx * 0.07, duration: 0.4 }}
+                  className="flex items-center justify-between rounded-2xl border border-orange-100/20 bg-white/5 px-4 py-3"
+                >
+                  <span className="text-sm text-[#fce5cf]">{lang}</span>
+                  <span className="rounded-full border border-orange-300/40 bg-orange-200/10 px-2.5 py-0.5 text-xs text-orange-200">{level}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <Reveal>
+              <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-[#fff4e8]">
+                <Award className="h-5 w-5 text-orange-300" />
+                Zertifikate & Kurse
+              </h2>
+            </Reveal>
+            <div className="grid gap-3">
+              {[
+                { name: 'Laravel', date: '11/2022', issuer: 'Udemy', href: 'https://www.udemy.com/certificate/UC-3d91afae-50db-4837-84c2-14f0f3a8da56/' },
+                { name: 'Angular – The Complete Guide', date: '01/2022', issuer: 'Udemy', href: 'https://www.udemy.com/certificate/UC-1cdafc72-8cba-4c74-a036-80d57bb40353/' },
+                { name: 'Logo Design Masterclass', date: '06/2020', issuer: 'Udemy', href: 'https://www.udemy.com/certificate/UC-878672ca-240b-4cbe-b2ed-da2f6286b241/' },
+                { name: 'Workshop Smovie Basic', date: '04/2020', issuer: 'Smovie Film GmbH', href: 'https://www.smovie.ch/de/' },
+              ].map((cert, idx) => (
+                <motion.a
+                  key={cert.name}
+                  href={cert.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ delay: idx * 0.07, duration: 0.4 }}
+                  whileHover={{ x: 4 }}
+                  className="group flex items-center justify-between rounded-2xl border border-orange-100/20 bg-white/5 px-4 py-3 transition hover:border-orange-200/40"
+                >
+                  <div>
+                    <div className="text-sm font-medium text-[#fce5cf]">{cert.name}</div>
+                    <div className="mt-0.5 text-xs text-orange-100/55">{cert.issuer} &middot; {cert.date}</div>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-orange-200/50 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── Kontakt ── */}
