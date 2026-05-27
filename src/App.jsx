@@ -43,38 +43,138 @@ import andyPhoto from './assets/andy-bui.jpg'
 const ThreeScene = lazy(() => import('./ThreeScene'))
 
 const projects = [
+  // Intern (von Andy entwickelt)
   {
     title: 'Easy Contact',
-    type: 'Web App',
+    type: 'Web App · Intern',
     description: 'Für schnelle Kontakte an Events.',
     href: 'https://easy-contact.com/',
     Icon: Users,
     color: 'from-orange-300/20 to-red-500/25',
+    internal: true,
   },
   {
-    title: 'Crypto Trading Simulator',
-    type: 'Web App',
-    description: 'Praktisch das Trading kennenlernen.',
-    href: 'https://cryptosim.andynope.com/',
-    Icon: TrendingUp,
+    title: 'BideBliss',
+    type: 'Shop · Intern',
+    description: 'Eigenes E‑Commerce / Food-Projekt.',
+    href: 'https://bidebliss.com/',
+    Icon: Globe,
     color: 'from-amber-200/20 to-orange-400/25',
+    internal: true,
   },
   {
-    title: 'Voci Trainer',
-    type: 'Web App',
-    description: 'Einfach und kostenlos Vokabeln lernen.',
-    href: 'https://voci-trainer.andynope.com/',
+    title: 'Bookitty (BideBliss Subdomain)',
+    type: 'Subdomain · Intern',
+    description: 'Subdomain / Microsite von BideBliss.',
+    href: 'https://bookitty.bidebliss.com/',
     Icon: BookOpen,
     color: 'from-yellow-200/20 to-orange-300/30',
+    internal: true,
   },
   {
-    title: '3D Spiel Horror Cave',
-    type: '3D / Game',
-    description: 'Im Dunkel durch das Labyrinth zum Ziel.',
-    href: 'https://horrorcave.andynope.com/',
-    Icon: Ghost,
+    title: 'MaidCafe Dreamgarden',
+    type: 'Website · Intern',
+    description: 'Landingpage & Order-System für MaidCafe.',
+    href: 'https://maidcafe-dreamgarden.ch/',
+    Icon: Camera,
     color: 'from-red-400/20 to-orange-500/25',
+    internal: true,
   },
+  {
+    title: 'Order (MaidCafe Subdomain)',
+    type: 'Subdomain · Intern',
+    description: 'Bestell-Subdomain für MaidCafe.',
+    href: 'https://order.maidcafe-dreamgarden.ch/',
+    Icon: Layers,
+    color: 'from-orange-200/20 to-amber-400/25',
+    internal: true,
+  },
+
+  // Externe / weitere Projekte (alle Links wie angegeben)
+  {
+    title: 'LeverSim',
+    type: 'Web App',
+    description: '',
+    href: 'https://leversim.andynope.com/',
+    Icon: Cpu,
+    color: 'from-orange-300/20 to-amber-500/25',
+    internal: false,
+  },
+  
+  {
+    title: 'CookingLooking',
+    type: 'Web App',
+    description: '',
+    href: 'https://cookinglooking.andynope.com/',
+    Icon: Film,
+    color: 'from-red-300/20 to-orange-400/25',
+    internal: false,
+  },
+  {
+    title: 'Thai Smile',
+    type: 'Website',
+    description: '',
+    href: 'https://thai-smile.ch/',
+    Icon: Globe,
+    color: 'from-amber-200/20 to-orange-300/25',
+    internal: false,
+  },
+  {
+    title: 'MPM Thai Massage',
+    type: 'Website',
+    description: '',
+    href: 'https://mpm-thai-massage.ch/',
+    Icon: Globe,
+    color: 'from-amber-200/20 to-orange-300/25',
+    internal: false,
+  },
+  {
+    title: 'Kreativ Media (login)',
+    type: 'Tool',
+    description: '',
+    href: 'https://my.kreativmedia.ch/login',
+    Icon: FileText,
+    color: 'from-amber-200/20 to-orange-300/25',
+    internal: false,
+  },
+  {
+    title: 'Photo Share',
+    type: 'Web App',
+    description: '',
+    href: 'https://photo-share.andynope.com/',
+    Icon: Camera,
+    color: 'from-amber-200/20 to-orange-300/25',
+    internal: false,
+  },
+  {
+    title: 'SoloLeveling',
+    type: 'Web App',
+    description: '',
+    href: 'https://sololeveling.andynope.com/',
+    Icon: Globe,
+    color: 'from-amber-200/20 to-orange-300/25',
+    internal: false,
+  },
+  {
+    title: 'QR Invoicer',
+    type: 'Web Tool',
+    description: '',
+    href: 'https://qr-invoicer.andynope.com/',
+    Icon: QrCode,
+    color: 'from-orange-300/20 to-amber-500/25',
+    internal: false,
+  },
+  {
+    title: 'Playstore (mirroring)',
+    type: 'Web App',
+    description: '',
+    href: 'https://playstore.andynope.com/',
+    Icon: Globe,
+    color: 'from-amber-200/20 to-orange-300/25',
+    internal: false,
+  },
+
+  // Existing tools that live in subfolders on the Plesk domain
   {
     title: 'Watermarker',
     type: 'Web Tool',
@@ -82,6 +182,7 @@ const projects = [
     href: 'https://andynope.com/watermarker',
     Icon: Layers,
     color: 'from-orange-200/20 to-amber-400/25',
+    internal: false,
   },
   {
     title: 'Universal Turing Maschine',
@@ -90,30 +191,34 @@ const projects = [
     href: 'https://utm.andynope.com/',
     Icon: Cpu,
     color: 'from-amber-300/20 to-red-400/25',
+    internal: false,
   },
   {
     title: 'QR-Code Generator',
     type: 'Web Tool',
     description: 'Kostenloser und einfacher QR-Code Generator.',
-    href: null,
+    href: 'https://andynope.com/qrcode-generator',
     Icon: QrCode,
     color: 'from-orange-300/20 to-amber-500/25',
+    internal: false,
   },
   {
     title: 'QR-Code Overlay',
     type: 'Web Tool',
     description: 'QR-Code direkt auf ein PDF oder Bild legen.',
-    href: null,
+    href: 'https://andynope.com/qrcode-overlay',
     Icon: QrCode,
     color: 'from-amber-200/20 to-orange-300/25',
+    internal: false,
   },
   {
     title: 'PDF to CSV',
     type: 'Web Tool',
     description: 'Liest eine Rechnung ein und exportiert sie als CSV-Datei.',
-    href: null,
+    href: 'https://andynope.com/pdfreader',
     Icon: FileSpreadsheet,
     color: 'from-red-300/20 to-orange-400/25',
+    internal: false,
   },
 ]
 
@@ -443,7 +548,10 @@ function App() {
         </Reveal>
 
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {projects.map((project, idx) => {
+          {projects
+            .slice()
+            .sort((a, b) => (b.internal ? 1 : 0) - (a.internal ? 1 : 0))
+            .map((project, idx) => {
             const Tag = project.href ? motion.a : motion.div
             const linkProps = project.href
               ? { href: project.href, target: '_blank', rel: 'noopener noreferrer' }
@@ -799,7 +907,7 @@ function App() {
         <Reveal>
           <motion.div
             whileHover={{ scale: 1.01 }}
-            className="rounded-[2rem] border border-orange-100/30 bg-gradient-to-r from-[#261c1b] via-[#2d1f1b] to-[#3a2319] p-8 shadow-[0_20px_80px_rgba(0,0,0,0.38)] md:p-12"
+            className="relative z-40 md:z-0 rounded-[2rem] border border-orange-100/30 bg-gradient-to-r from-[#261c1b] via-[#2d1f1b] to-[#3a2319] p-8 shadow-[0_20px_80px_rgba(0,0,0,0.38)] md:p-12"
           >
             <div className="grid gap-8 md:grid-cols-12 md:items-center">
               <div className="md:col-span-7">
